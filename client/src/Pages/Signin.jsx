@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInFailure, signInStart, signInSuccess } from '../redux/User/userSlice';
 import OAuth from '../components/OAuth';
-import tecnicalimage from "../Images/technical.png";
 import signIn from "../Images/sign_in.png"
 
 export default function SignIn() {
