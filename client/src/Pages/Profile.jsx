@@ -1,13 +1,20 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState, useRef,Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getStorage, uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
-import { app } from '../firebase';
-import { updateUserStart, updateUserFailure, updateUserSuccess, deleteUserStart, deleteUserSuccess, deleteUserFailure, signout } from '../redux/User/userSlice';
-import './css/profile.css';
-import AllTask from './Tasks/AllTask';
-import { Menu, Transition } from "@headlessui/react";
+import React, { useEffect, useState, useRef, Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getStorage,
+  uploadBytesResumable,
+  ref,
+  getDownloadURL,
+} from "firebase/storage";
+import { app } from "../firebase";
+import {
+  updateUserStart,
+  updateUserFailure,
+  updateUserSuccess,
+} from "../redux/User/userSlice";
+import "./css/profile.css";
+import signIn from "../Images/sign_in.png";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -28,15 +35,14 @@ export default function Profile() {
     try {
       const response = await fetch(`/api/auth/Staff/${currentUser._id}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch orders');
+        throw new Error("Failed to fetch orders");
       }
       const data = await response.json();
       setOrders(data);
     } catch (error) {
-      console.error('Error fetching orders:', error);
+      console.error("Error fetching orders:", error);
     }
   };
-  console.log(currentUser)
 
   useEffect(() => {
     if (image) {
@@ -51,9 +57,10 @@ export default function Profile() {
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setImagePercent(Math.round(progress));
       },
       (error) => {
@@ -76,9 +83,9 @@ export default function Profile() {
     try {
       dispatch(updateUserStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -94,111 +101,119 @@ export default function Profile() {
     }
   };
 
-  const handledeleteAccount = async () => {
-    try {
-      dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(deleteUserFailure(data));
-        return;
-      }
-      dispatch(deleteUserSuccess(data));
-      alert('User deleted successfully');
-    } catch (error) {
-      dispatch(deleteUserFailure(error));
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await fetch('api/auth/signout');
-      dispatch(signout());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Get unique staff IDs
-  const uniqueStaffIds = [...new Set(orders.map(order => order.staffId))];
-
   return (
-    <div className='user-profile'>
-      <h1 className='user-profile-name'>Profile</h1>
-      <form onSubmit={handleSubmit} className='user-profile-form'>
-        <input type='file' ref={fileRef} hidden accept='image/*' onChange={(e) => setImage(e.target.files[0])} />
+    <div className="flex justify-between mt-12">
+      <div className="w-1/2 pr-4">
+        <div className="user-profile ml-16 bg-gray-200 p-8 rounded-lg shadow-md">
+          <h1 className="user-profile-name text-4xl font-bold mb-4">
+            Update Your Profile
+          </h1>
+          <form onSubmit={handleSubmit} className="user-profile-form ml-32">
+            <div className="mb-2">
+              <label
+                htmlFor="profilePicture"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Update Profile Picture
+              </label>
+              <input
+                type="file"
+                ref={fileRef}
+                hidden
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+              <img
+                src={formData.profilePicture || currentUser.profilePicture}
+                alt="profile"
+                className="profile-image h-32 w-32 rounded-full object-cover cursor-pointer mb-4 border-2 border-gray-300"
+                onClick={() => fileRef.current.click()}
+              />
+              <p className="user-profile-image-status text-sm text-gray-500 mb-2">
+                {imageError ? (
+                  <span className="text-red-500">
+                    Error uploading image (file size must be less than 2 MB)
+                  </span>
+                ) : imagePercent > 0 && imagePercent < 100 ? (
+                  <span>{`Uploading: ${imagePercent}%`}</span>
+                ) : imagePercent === 100 ? (
+                  <span className="text-green-500">
+                    Image uploaded successfully
+                  </span>
+                ) : (
+                  ""
+                )}
+              </p>
+            </div>
 
-        <img
-          src={formData.profilePicture || currentUser.profilePicture}
-          alt='profile'
-          className='profile-image'
-          onClick={() => fileRef.current.click()}
-        />
+            <div className="mb-2">
+              <label
+                htmlFor="email"
+                className="block mr-32 text-sm font-semibold  text-gray-900 mb-2"
+              >
+                Update Your Username :-
+              </label>
+              <input
+                defaultValue={currentUser.username}
+                type="text"
+                id="username"
+                placeholder="Username"
+                className="user-profile-username border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={handleChange}
+              />
+            </div>
 
-        <p className='user-profile-image-status'>
-          {imageError ? (
-            <span>Error uploading image (file size must be less than 2 MB)</span>
-          ) : imagePercent > 0 && imagePercent < 100 ? (
-            <span>{`Uploading: ${imagePercent}%`}</span>
-          ) : imagePercent === 100 ? (
-            <span>Image uploaded successfully</span>
-          ) : (
-            ''
-          )}
-        </p>
+            <div className="mb-2">
+              <label
+                htmlFor="email"
+                className="block mr-36 text-sm font-semibold  text-gray-900 mb-2"
+              >
+                Update Your Email :-
+              </label>
+              <input
+                defaultValue={currentUser.email}
+                type="email"
+                id="email"
+                placeholder="Email"
+                className="user-profile-email border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={handleChange}
+              />
+            </div>
 
-        <input
-          defaultValue={currentUser.username}
-          type='text'
-          id='username'
-          placeholder='Username'
-          className='user-profile-username'
-          onChange={handleChange}
-        />
-        <input
-          defaultValue={currentUser.email}
-          type='email'
-          id='email'
-          placeholder='Email'
-          className='user-profile-email'
-          onChange={handleChange}
-        />
-        
-        <input
-          defaultValue={currentUser.address}
-          type='text'
-          id='address'
-          placeholder='address'
-          className='user-profile-address'
-          onChange={handleChange}
-        />
+            <div className="mb-2">
+              <label
+                htmlFor="email"
+                className="block mr-32 text-sm font-semibold  text-gray-900 mb-2"
+              >
+                Update Your Address :-
+              </label>
+              <input
+                defaultValue={currentUser.address}
+                type="text"
+                id="address"
+                placeholder="Address"
+                className="user-profile-address border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={handleChange}
+              />
+            </div>
 
-        <button className='user-profile-update-button'>{loading ? 'Loading...' : 'Update'}</button>
-      </form>
-      <div id='flex justify-between mt-5'>
-        <span onClick={handledeleteAccount} className='user-profile-delete-button'>Close Account</span>
-        <span onClick={handleSignOut}className='user-profile-signout-button'>Sign Out</span>
-        <Link id='navigate-button-addshedule' to='/AddStaff'>Add Shedule</Link> 
-        <Link id='my-details-button' to='/StaffDetailsProfile'>My Details</Link> 
-        <Link id='all-task-button' to='/AllTask'>Tasks</Link> 
-</div>
-<div id='staff-id-showing'>
-    
-          {uniqueStaffIds.map(staffId => (
-            <option key={staffId}  value={staffId}>
-              Your Staff Id : <b>{staffId}</b>
-            </option>
-          ))}
-    </div>   
-      
+            <button className="user-profile-update-button bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">
+              {loading ? "Loading..." : "Update"}
+            </button>
+          </form>
 
-      <p className='user-profile-errors'>{error && 'Something went wrong'}</p>
-      <p className='user-profile-update-success'>{updateSuccess && 'User updated successfully'}</p>
-   
-     
+          <p className="user-profile-errors text-red-500">
+            {error && "Something went wrong"}
+          </p>
+          <p className="user-profile-update-success text-green-500">
+            {updateSuccess && "User updated successfully"}
+          </p>
+        </div>
+      </div>
 
+      <div className="w-1/2 pl-4">
+        <img src={signIn} alt="Machine" className="w-full h-auto rounded-xl" />
+      </div>
     </div>
   );
 }
