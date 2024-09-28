@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Menu, Transition } from "@headlessui/react";
@@ -68,23 +68,10 @@ export default function Header() {
             <li className="hover:text-blue-400 transition">About</li>
           </Link>
 
-          {/* Profile or Sign In */}
-          <Link to="/profile">
-            {currentUser ? (
-              <img
-                src={currentUser.profilePicture}
-                alt="Staff Profile"
-                className="h-10 w-10 rounded-full object-cover shadow-md"
-              />
-            ) : (
-              <li className="hover:text-blue-400 transition">Staff Sign In</li>
-            )}
-          </Link>
-
           {/* Dropdown Menu for User Profile */}
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button className="w-10 h-10 rounded-full overflow-hidden shadow-lg cursor-pointer">
-            {currentUser && currentUser.profilePicture ? (
+              {currentUser && currentUser.profilePicture ? (
                 <img
                   src={currentUser.profilePicture}
                   alt="Profile"
