@@ -5,8 +5,7 @@ const TaskSchema = new mongoose.Schema({
     stafffid: {
         type: String,
         required: true,
-        unique: true,
-  
+
     },
     task_name: {
         type: String,

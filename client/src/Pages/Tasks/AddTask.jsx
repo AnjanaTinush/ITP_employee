@@ -40,26 +40,29 @@ function AddTask() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const res = await fetch('/api/auth/AddTASK', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(order),
             });
+    
             if (!res.ok) {
                 const data = await res.json();
                 throw new Error(data.message || 'Failed to create task');
             }
-            alert('successfully send to task')
-            navigate('/AdminAllTask')
-            // Optionally, reset the form or give feedback to the user
+    
+            alert('Task successfully created');
+            navigate('/AdminAllTask');
         } catch (error) {
-            console.error('Something went wrong!', error.message);
+            console.error('Error creating task:', error.message);
+            alert('Failed to create task: ' + error.message);  // Show a friendly error message to the user
         }
     };
+    
 
     return (
         <div id="task-body">
