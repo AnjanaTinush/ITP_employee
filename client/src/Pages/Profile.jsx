@@ -165,11 +165,13 @@ export default function Profile() {
           className='user-profile-email'
           onChange={handleChange}
         />
+        
         <input
-          type='password'
-          id='password'
-          placeholder='Password'
-          className='user-profile-password'
+          defaultValue={currentUser.address}
+          type='text'
+          id='address'
+          placeholder='address'
+          className='user-profile-address'
           onChange={handleChange}
         />
 
