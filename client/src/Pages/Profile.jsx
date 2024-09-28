@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState, useRef, Fragment } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getStorage,
@@ -14,8 +14,8 @@ import {
   updateUserSuccess,
 } from "../redux/User/userSlice";
 import "./css/profile.css";
-import signIn from "../Images/sign_in.png";
-import updataprofile from "../Images/profileuptade.png"
+
+import updataprofile from "../Images/profileuptade.png";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -213,7 +213,11 @@ export default function Profile() {
       </div>
 
       <div className="w-1/2 pl-4">
-        <img src={updataprofile} alt="Machine" className="w-full h-auto rounded-xl" />
+        <img
+          src={updataprofile}
+          alt="Machine"
+          className="w-full h-auto rounded-xl"
+        />
       </div>
     </div>
   );
