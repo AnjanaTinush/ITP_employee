@@ -1,104 +1,155 @@
-import { useState, useEffect } from "react";
-import '../css/AddTask.css'
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import addtask from "../../Images/addtask.png";
 
-function AddTask() {
-    const [orders, setOrders] = useState([]);
-    const navigate=useNavigate();
-    const [order, setOrder] = useState({
-        stafffid: "",
-        task_name: "",
-        task_description: "",
-        start_date: "",
-        end_date: ""
-    });
+const AddTask = () => {
+  const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
+  const [order, setOrder] = useState({
+    stafffid: "",
+    task_name: "",
+    task_description: "",
+    start_date: "",
+    end_date: ""
+  });
 
-    useEffect(() => {
-        fetchOrders();
-    }, []);
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
-    const fetchOrders = async () => {
-        try {
-            const response = await fetch(`/api/auth/users/AllStaff`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch orders');
-            }
-            const data = await response.json();
-            setOrders(data);
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-        }
-    };
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch(`/api/auth/users/AllStaff`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch orders');
+      }
+      const data = await response.json();
+      setOrders(data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
 
-    const handleOnChange = (e) => {
-        const { value, name } = e.target;
-        setOrder(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+  const handleOnChange = (e) => {
+    const { value, name } = e.target;
+    setOrder(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        try {
-            const res = await fetch('/api/auth/AddTASK', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(order),
-            });
-    
-            if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data.message || 'Failed to create task');
-            }
-    
-            alert('Task successfully created');
-            navigate('/AdminAllTask');
-        } catch (error) {
-            console.error('Error creating task:', error.message);
-            alert('Failed to create task: ' + error.message);  // Show a friendly error message to the user
-        }
-    };
-    
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    return (
-        <div id="task-body">
-            <div className="add-task">
-                <div id="task-form">
-                    <h2 id="main-topic-task-form"><b>Add Task</b></h2>
-                    <form id="task-form" onSubmit={handleSubmit}>
-                        <label htmlFor="stafffid">Staff Id:</label>
-                        <select id="stafffid" name="stafffid" onChange={handleOnChange} value={order.stafffid}>
-                            <option value="">Select Staff Id</option>
-                            {orders.map((staff) => (
-                                <option key={staff._id}>
-                                    {staff.staffId}
-                                </option>
-                            ))}
-                        </select>
+    try {
+      const res = await fetch('/api/auth/AddTASK', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order),
+      });
 
-                        <label htmlFor="task_name">Task Name:</label>
-                        <input type="text" id="task_name" name="task_name" onChange={handleOnChange} />
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || 'Failed to create task');
+      }
 
-                        <label htmlFor="task_description">Task Description:</label>
-                        <input type="text" id="task_description" name="task_description" onChange={handleOnChange}  />
+      alert('Task successfully created');
+      navigate('/AdminAllTask');
+    } catch (error) {
+      console.error('Error creating task:', error.message);
+      alert('Failed to create task: ' + error.message);
+    }
+  };
 
-                        <label htmlFor="start_date">Start Date:</label>
-                        <input type="date" id="start_date" name="start_date" onChange={handleOnChange}  />
-
-                        <label htmlFor="end_date">End Date:</label>
-                        <input type="date" id="end_date" name="end_date" onChange={handleOnChange} />
-
-                        <button type="send-task-btn">Send Task to Member</button>
-                    </form>
-                    <br />
-                </div>
-            </div>
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center lg:items-start">
+        {/* Left side image */}
+        <div className="w-full lg:w-1/2  lg:mb-0 flex justify-center lg:justify-start">
+          <img src={addtask} alt="Task Management" />
         </div>
-    );
+
+        {/* Right side form */}
+        <div className="w-full lg:w-1/2 lg:pl-8 mb-8">
+          <div className="bg-white p-8 rounded-xl shadow-md max-w-md mx-auto ml-72">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">Add Task</h2>
+            <form className="space-y-6 ml-4" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="stafffid" className="block text-sm font-medium text-gray-700">Staff Id</label>
+                <select
+                  id="stafffid"
+                  name="stafffid"
+                  onChange={handleOnChange}
+                  value={order.stafffid}
+                  required
+                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option value="">Select Staff Id</option>
+                  {orders.map((staff) => (
+                    <option key={staff._id}>{staff.staffId}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="task_name" className="block text-sm font-medium text-gray-700">Task Name</label>
+                <input
+                  id="task_name"
+                  name="task_name"
+                  type="text"
+                  required
+                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="task_description" className="block text-sm font-medium text-gray-700">Task Description</label>
+                <input
+                  id="task_description"
+                  name="task_description"
+                  type="text"
+                  required
+                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="start_date" className="block text-sm font-medium text-gray-700">Start Date</label>
+                <input
+                  id="start_date"
+                  name="start_date"
+                  type="date"
+                  required
+                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="end_date" className="block text-sm font-medium text-gray-700">End Date</label>
+                <input
+                  id="end_date"
+                  name="end_date"
+                  type="date"
+                  required
+                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Send Task to Member
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default AddTask;
