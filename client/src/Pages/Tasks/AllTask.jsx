@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button, Modal, Table } from "flowbite-react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
-import logo from "../css/delete-icon.png";
 import "../css/AllTasks.css";
 import { Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
@@ -11,8 +8,6 @@ import 'jspdf-autotable';
 export default function AllTask() {
   const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
-  const [taskIdToDelete, setTaskIdToDelete] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchTasks();

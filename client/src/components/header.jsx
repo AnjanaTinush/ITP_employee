@@ -8,6 +8,8 @@ import {
   FaPlusCircle,
   FaSignOutAlt,
   FaUserTimes,
+  FaSignInAlt,
+  FaUser,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import {
@@ -78,8 +80,8 @@ export default function Header() {
                   className="h-full w-full"
                 />
               ) : (
-                <div className="flex justify-center items-center text-blue-950 hover:text-blue-800 transition relative">
-                  <i className="fa-regular fa-user text-2xl"></i>
+                <div className="flex justify-center items-center transition relative">
+                  <FaUser className="mr-2 text-xl" />{" "}
                 </div>
               )}
             </Menu.Button>
@@ -160,7 +162,12 @@ export default function Header() {
                       </div>
                     </div>
                   ) : (
-                    <h1 className="text-center text-gray-700">No user</h1>
+                    <button
+                      onClick={() => navigate("/sign-in")}
+                      className="w-full flex items-center justify-start bg-blue-500 hover:bg-blue-950 text-sm py-2 px-4 rounded-lg shadow-md"
+                    >
+                      <FaSignInAlt className="mr-2" /> Sign In
+                    </button>
                   )}
                 </div>
               </Menu.Items>
