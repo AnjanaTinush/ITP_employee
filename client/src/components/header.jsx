@@ -44,6 +44,7 @@ export default function Header() {
     try {
       await fetch("api/auth/signout");
       dispatch(signout());
+      navigate("/sign-in");
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +84,7 @@ export default function Header() {
           {/* Dropdown Menu for User Profile */}
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button className="w-10 h-10 rounded-full overflow-hidden shadow-lg cursor-pointer">
-              {currentUser.profilePicture ? (
+            {currentUser && currentUser.profilePicture ? (
                 <img
                   src={currentUser.profilePicture}
                   alt="Profile"
@@ -109,7 +110,7 @@ export default function Header() {
               <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-4 px-6">
                   {/* User Profile Info */}
-                  {Object.keys(currentUser).length > 0 ? (
+                  {currentUser && Object.keys(currentUser).length > 0 ? (
                     <div className="text-center space-y-2">
                       {/* Profile Picture */}
                       <img
