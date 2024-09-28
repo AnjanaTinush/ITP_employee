@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import addtask from "../../Images/addtask.png";
 
 const AddTask = () => {
@@ -27,6 +29,7 @@ const AddTask = () => {
       setOrders(data);
     } catch (error) {
       console.error('Error fetching orders:', error);
+      toast.error('Failed to fetch staff members');
     }
   };
 
@@ -55,11 +58,21 @@ const AddTask = () => {
         throw new Error(data.message || 'Failed to create task');
       }
 
-      alert('Task successfully created');
-      navigate('/AdminAllTask');
+      toast.success('Task successfully created', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      setTimeout(() => {
+        navigate('/AdminAllTask');
+      }, 3000);
     } catch (error) {
       console.error('Error creating task:', error.message);
-      alert('Failed to create task: ' + error.message);
+      toast.error('Failed to create task: ' + error.message);
     }
   };
 
@@ -73,6 +86,7 @@ const AddTask = () => {
 
         {/* Right side form */}
         <div className="w-full lg:w-1/2 lg:pl-8 mb-8">
+        <ToastContainer />
           <div className="bg-white p-8 rounded-xl shadow-md max-w-md mx-auto ml-72">
             <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">Add Task</h2>
             <form className="space-y-6 ml-4" onSubmit={handleSubmit}>
