@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+/* eslint-disable no-undef */
+import React, { useEffect, useState, useRef,Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getStorage, uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
 import { app } from '../firebase';
 import { updateUserStart, updateUserFailure, updateUserSuccess, deleteUserStart, deleteUserSuccess, deleteUserFailure, signout } from '../redux/User/userSlice';
 import './css/profile.css';
+import AllTask from './Tasks/AllTask';
+import { Menu, Transition } from "@headlessui/react";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -33,6 +36,7 @@ export default function Profile() {
       console.error('Error fetching orders:', error);
     }
   };
+  console.log(currentUser)
 
   useEffect(() => {
     if (image) {
@@ -190,6 +194,9 @@ export default function Profile() {
 
       <p className='user-profile-errors'>{error && 'Something went wrong'}</p>
       <p className='user-profile-update-success'>{updateSuccess && 'User updated successfully'}</p>
+   
+     
+
     </div>
   );
 }
