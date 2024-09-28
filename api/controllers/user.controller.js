@@ -28,7 +28,6 @@ export const updateUser=async (req,res,next)=>{
                     username:req.body.username,
                     email:req.body.email,
                     address:req.body.address,
-                    pasword:req.body.password,
                     profilePicture:req.body.profilePicture,
                 },
             },
