@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "../css/AllTasks.css";
 import { Link } from "react-router-dom";
-import { Icon } from '@iconify/react';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import { Icon } from "@iconify/react";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export default function AllTask() {
   const [tasks, setTasks] = useState([]);
@@ -46,7 +46,6 @@ export default function AllTask() {
       task.stafffid.toString().includes(searchTerm)
   );
 
-
   const generateReport = () => {
     const doc = new jsPDF();
     const currentDate = new Date().toLocaleDateString();
@@ -55,19 +54,26 @@ export default function AllTask() {
       minute: "2-digit",
     });
     const pdfName = `Tasks_Report_${currentDate}.pdf`;
-  
+
     // Add report title
     doc.setFontSize(20);
     doc.text("Tasks Report", 20, 20);
-  
+
     // Add current date and time
     doc.setFontSize(12);
     doc.text(`Date: ${currentDate}`, 20, 30);
     doc.text(`Time: ${currentTime}`, doc.internal.pageSize.getWidth() - 50, 30);
-  
+
     // Define table headers
-    const tableHeaders = ["Staff ID", "Task Name", "Description", "Start Date", "End Date", "Status"];
-  
+    const tableHeaders = [
+      "Staff ID",
+      "Task Name",
+      "Description",
+      "Start Date",
+      "End Date",
+      "Status",
+    ];
+
     // Map data for the table body
     const data = filteredTasks.map((task) => [
       task.stafffid,
@@ -77,20 +83,18 @@ export default function AllTask() {
       task.end_date,
       task.is_complete ? "Completed" : "Pending",
     ]);
-  
+
     // Generate the PDF table
     doc.autoTable({
       startY: 40,
       head: [tableHeaders],
       body: data,
     });
-  
+
     // Save the PDF with a dynamic name
     doc.save(pdfName);
   };
-  
 
-  
   return (
     <div className="max-w-7xl mx-auto p-4">
       <h2 className="task-list-heading text-2xl font-bold mb-4">All Tasks</h2>
@@ -108,13 +112,18 @@ export default function AllTask() {
           className="border-3 border-blue-800 rounded-2xl p-2  text-center"
           style={{ width: "528px" }}
         />
-        <Button
-  icon={<Icon icon="ph:printer" className="text-gray-300 h-12 w-12" />}
-  className="bg-green-700 text-white h-11 mb-2"
-  onClick={generateReport}  // Correctly passing the function here
->
-  Explore PDF
-</Button>
+        <button
+          icon={
+            <Icon
+              icon="ph:printer"
+              className="text-gray-300 h-12 w-12 bg-rounded-lg"
+            />
+          }
+          className="bg-green-600 text-white py-1 px-3 rounded"
+          onClick={generateReport} // Correctly passing the function here
+        >
+          Explore PDF
+        </button>
       </div>
 
       {filteredTasks.length > 0 ? (
