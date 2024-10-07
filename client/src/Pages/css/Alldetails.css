@@ -2,90 +2,145 @@
 body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   font-family: 'Roboto', sans-serif;
+  color: #333;
+  line-height: 1.6;
 }
 
 .p-4 {
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* Navigation and buttons */
 #admin-page-names {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #admin-page-names a {
-  background-color: #007BFF;
+  background-color: #3498db;
   color: #fff;
   padding: 10px 15px;
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 5px;
+  text-align: center;
 }
 
 #admin-page-names a:hover {
-  background-color: #0056b3;
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Heading */
+#allstafftopic {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+#allstafftopic::before {
+  content: '';
+  width: 60px;
+  height: 5px;
+  background-color: #e74c3c;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+
+#allstafftopic:hover {
+  color: #e74c3c;
+  transition: color 0.3s ease;
 }
 
 /* Grid for card layout */
 .grid {
   display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 /* Card Styling */
 .card {
   background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 25px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, #3498db, #e74c3c);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
 }
 
 .card-header h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: #2c3e50;
 }
 
 .card-body {
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.8;
   color: #555;
+}
+
+.card-body p {
+  margin-bottom: 10px;
+}
+
+.card-body strong {
+  color: #34495e;
+  font-weight: 600;
 }
 
 .card-body img {
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.modal-button-group button {
-  padding: 10px 20px;
-  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  border: 3px solid #fff;
 }
 
 /* Delete button */
@@ -93,6 +148,11 @@ body {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#card-delete-btn:hover {
+  transform: scale(1.1);
 }
 
 #card-delete-btn img {
@@ -101,45 +161,76 @@ body {
 }
 
 /* Modal styling */
-.text-center h3 {
+.modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+}
+
+.modal-content h3 {
   font-size: 1.5rem;
   color: #333;
+  margin-bottom: 20px;
 }
 
-.modal-button-group .btn-danger {
-  background-color: #e3342f;
+.modal-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.modal-button-group button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.modal-button-group button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+  background-color: #e74c3c;
   color: white;
 }
 
-.modal-button-group .btn-cancel {
-  background-color: #6c757d;
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-cancel {
+  background-color: #7f8c8d;
   color: white;
 }
-/* Styling for the Main Heading */
-#allstafftopic {
-  font-size: 2.5rem;            /* Large font size */
-  font-weight: 800;             /* Bold font weight */
-  color: #2c3e50;               /* Dark blue-grey color */
-  text-transform: uppercase;    /* All uppercase for a modern look */
-  letter-spacing: 2px;          /* Increase space between letters */
-  text-align: center;           /* Center the heading */
-  margin-bottom: 2rem;          /* Add spacing below the heading */
-  position: relative;
+
+.btn-cancel:hover {
+  background-color: #95a5a6;
 }
 
-#allstafftopic::before {
-  content: '';
-  width: 60px;                  /* Width of the underline */
-  height: 5px;                  /* Thickness of the underline */
-  background-color: #e74c3c;    /* Bright red underline */
-  position: absolute;
-  bottom: -10px;                /* Place the underline just below the text */
-  left: 50%;
-  transform: translateX(-50%);  /* Center the underline */
-  border-radius: 10px;          /* Smooth the underline corners */
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #admin-page-names {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-#allstafftopic:hover {
-  color: #e74c3c;               /* Change heading color on hover */
-  transition: color 0.3s ease;  /* Smooth hover transition */
+  #admin-page-names a {
+    margin-bottom: 10px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .card-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .card-body {
+    font-size: 0.9rem;
+  }
 }

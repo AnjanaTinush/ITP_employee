@@ -92,17 +92,7 @@ export default function AdminAllTask() {
                 </p>
               </div>
               <div className="task-action-buttons flex justify-between items-center mt-auto">
-                <button
-                  className={`status-button ${
-                    task.is_complete ? "completed-status" : "pending-status"
-                  } text-white py-1 px-3 rounded`}
-                  onClick={() => handleCompleteTask(task._id)}
-                  style={{
-                    backgroundColor: task.is_complete ? "green" : "yellow",
-                  }}
-                >
-                  {task.is_complete ? "Completed" : "Pending"}
-                </button>
+                {/* 
                 <Button
                   onClick={() => {
                     setShowModal(true);
@@ -114,7 +104,7 @@ export default function AdminAllTask() {
                     alt="delete icon"
                     className="delete-icon-img"
                   />
-                </Button>
+                </Button>*/}
               </div>
             </li>
           ))}

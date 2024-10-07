@@ -86,6 +86,7 @@ export default function SignUp() {
                 className="p-2 block w-full rounded-xl bg-gray-100 text-black border-none placeholder-gray-400 placeholder-opacity-50 font-custom text-md"
               />
             </div>
+            
 
             <div className="flex flex-col mt-2 relative">
             <label htmlFor="address" className="text-gray-700 font-bold">Paaword</label>

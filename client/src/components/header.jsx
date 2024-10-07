@@ -56,7 +56,7 @@ export default function Header() {
     <div className="bg-gray-800 text-white shadow-md">
       <div className="flex justify-between items-center py-4 px-6">
         {/* Website Name */}
-        <h1 className="text-xl font-semibold">Topic Name</h1>
+        <h1 className="text-xl font-semibold">Task Management</h1>
 
         {/* Navigation Links */}
         <ul className="flex items-center space-x-6">
@@ -130,7 +130,7 @@ export default function Header() {
 
                         {/* Task Button */}
                         <button
-                          onClick={() => navigate("/AllTask")}
+                          onClick={() => navigate("/AdminAllTask")}
                           className="w-full flex items-center justify-start bg-blue-500 hover:bg-blue-950 text-sm py-2 px-4 rounded-lg shadow-md"
                         >
                           <FaTasks className="mr-2" /> Task

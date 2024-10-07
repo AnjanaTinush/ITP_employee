@@ -72,7 +72,7 @@ export default function App() {
           path="/AddStaff"
           element={
             <div>
-              <Header />
+             
               <AddStaff />
             </div>
           }
