@@ -196,12 +196,17 @@ export const AllStaff = async (req, res, next) => {
 
 
 //TASK
-//Add Task
-export const AddTASK =async(req,res)=>{
-    const data=new Task(req.body)
-    await data.save()
-    res.send({success:true,message:"data created successfuly"})
-}
+export const AddTASK = async (req, res) => {
+    try {
+        const data = new Task(req.body);
+        await data.save();
+        res.status(201).json({ success: true, message: "Task created successfully" });
+    } catch (error) {
+        console.error("Error adding task:", error);
+        res.status(500).json({ success: false, message: "Error creating task" });
+    }
+};
+
 
 //all Tasks
 export const AllTasks = async (req, res, next) => {

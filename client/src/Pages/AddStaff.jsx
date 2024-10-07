@@ -103,7 +103,7 @@ export default function AddStaff() {
       }
 
       alert('Staff added successfully');
-      navigate('/StaffDetailsProfile');
+      navigate('/login-manager');
     } catch (error) {
       setError('Something went wrong!');
       console.log(error);
@@ -127,23 +127,15 @@ export default function AddStaff() {
       <h1 id="sub-first-topic-of-form">Basic Information</h1>
       <form id="add-staff-form" onSubmit={handleSubmit}>
         <label>Your Staff Id</label>
-        <select onChange={handleStaffIdChange}>
-          <option value="">Select Staff ID</option>
-          {orders.map((order) => (
-            <option key={order._id} value={order.staffId}>
-              {order.staffId}
-            </option>
-          ))}
-          {orders.length === 0 && <option value="new">Add New Staff ID</option>}
-        </select>
+       
         
-        {isNewStaffId && (
+       
           <input
             type="text"
             placeholder="Enter New Staff ID"
             onChange={(e) => setFormData({ ...formData, staffId: e.target.value })}
           />
-        )}
+      
 
         <input type="text" placeholder="First Name" onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
         <input type="text" placeholder="Last Name" onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} />

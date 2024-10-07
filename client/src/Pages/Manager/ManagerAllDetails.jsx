@@ -75,15 +75,22 @@ export default function ManagerAllDetails() {
     }
   };
 
+
   return (
     <div className="p-4">
       <div id="admin-page-names" className="flex justify-between mb-4">
         <h2 id='allstafftopic'>All Staff Members</h2>
-        <Link id="add-task-page-btn" to="/AdminAllTask">
+        <Link id="add-task-page-btn" to="/AllTask">
           All Task
+        </Link>
+        <Link id="add-task-page-btn" to="/AddStaff">
+         Add staff
         </Link>
         <Link id="all-task-page-btn" to="/AddTask">
           Add Task
+        </Link>
+        <Link id="all-task-page-btn" >
+          Log out
         </Link>
       </div>
 
