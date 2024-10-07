@@ -1,16 +1,4 @@
 /* Body styling for full-page background */
-body {
-  margin: 0;
-  padding: 0;
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2o5ghqJ3-SI82AcF-MFvHfYxpMYmkvFvpyw&s');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 /* Container for the entire form */
 .add-staff-container {

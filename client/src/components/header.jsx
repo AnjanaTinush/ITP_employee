@@ -136,13 +136,7 @@ export default function Header() {
                           <FaTasks className="mr-2" /> Task
                         </button>
 
-                        {/* Add Task Button */}
-                        <button
-                          onClick={() => navigate("/AddStaff")}
-                          className="w-full flex items-center justify-start bg-blue-500 hover:bg-blue-950 text-sm py-2 px-4 rounded-lg shadow-md"
-                        >
-                          <FaPlusCircle className="mr-2" /> Add Shedule
-                        </button>
+                       
 
                         {/* Sign Out Button */}
                         <button

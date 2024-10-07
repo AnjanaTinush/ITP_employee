@@ -29,9 +29,9 @@ const TaskSchema = new mongoose.Schema({
       
     },
     
-    is_complete:{
-        type:Boolean,
-        default:false
+    status:{
+        type:String,
+        default:"Pending"
 
     },
    

@@ -7,7 +7,7 @@ import "jspdf-autotable";
 
 export default function AllTask() {
   const [tasks, setTasks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchTasks();
@@ -26,12 +26,32 @@ export default function AllTask() {
     }
   };
 
-  const handleCompleteTask = (taskId) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task._id === taskId ? { ...task, status: true } : task
-      )
-    );
+  // Handle task completion by updating is_complete field to "Completed"
+  const handleCompleteTask = async (taskId, currentStatus) => {
+    const newStatus = currentStatus === "Pending" ? "Completed" : "Pending";
+
+    try {
+      const response = await fetch(`/api/tasks/${taskId}/complete`, {
+        method: "PUT", // or PATCH depending on your API setup
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ is_complete: newStatus }), // Send updated status
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update task");
+      }
+
+      // If the server update is successful, update the state locally
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task._id === taskId ? { ...task, is_complete: newStatus } : task
+        )
+      );
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
   };
 
   // Function to handle the search input
@@ -99,7 +119,7 @@ export default function AllTask() {
     <div className="max-w-7xl mx-auto p-4">
       <h2 className="task-list-heading text-2xl font-bold mb-4">All Tasks</h2>
       <h3 id="select-task-topic" className="text-lg mb-6 font-serif font-bold">
-        Here is all staf task according to your assigned staff ID
+        Here is all staff task according to your assigned staff ID
       </h3>
 
       {/* Search Bar */}
@@ -120,7 +140,7 @@ export default function AllTask() {
             />
           }
           className="bg-green-600 text-white py-1 px-3 rounded"
-          onClick={generateReport} // Correctly passing the function here
+          onClick={generateReport}
         >
           Explore PDF
         </button>
@@ -138,7 +158,7 @@ export default function AllTask() {
                   {task.task_name}
                 </h4>
                 <p className="text-sm text-gray-600">
-                  <strong className="font-semibold">Staff ID:</strong>{" "}
+                  <strong className="font-semibold">User name :</strong>{" "}
                   {task.stafffid}
                 </p>
                 <p className="text-sm text-gray-600">
@@ -158,17 +178,12 @@ export default function AllTask() {
                 <Link
                   to={`/update-task/${task._id}`}
                   className="task-item-update-btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
-                  onClick={() => handleCompleteTask(task._id)}
                 >
                   Update Task
                 </Link>
-                <button
-                  className="task-item-status-btn text-white py-1 px-3 rounded"
-                  style={{
-                    backgroundColor: task.is_complete ? "red" : "yellow",
-                  }}
-                >
-                  {task.is_complete ? "Completed" : "Pending"}
+                <button className="task-item-update-btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+>
+                {task.status}
                 </button>
               </div>
             </div>

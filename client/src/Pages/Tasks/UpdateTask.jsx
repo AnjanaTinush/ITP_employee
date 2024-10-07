@@ -42,7 +42,7 @@ function UpdateTask() {
 
   const handleUpdate = async () => {
     try {
-      task.is_complete=true;
+      
       const response = await fetch(`/api/user/updateTask`, {
         method: 'PUT',
         headers: {
@@ -51,7 +51,6 @@ function UpdateTask() {
         body: JSON.stringify({
           id: task._id,
           ...task,
-          status: 'completed', // Update task status to completed
         }),
       });
 
@@ -86,6 +85,15 @@ function UpdateTask() {
 
       <label htmlFor="end_date">End Date:</label>
       <input type="date" id="end_date" name="end_date" onChange={handleInputChange} value={task?.end_date} />
+
+      <label htmlFor="status">Status:</label>
+<select id="status" name="status" onChange={handleInputChange} value={task?.status}
+className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  >
+  <option value="Pending">Pending</option>
+  <option value="Completed">Completed</option>
+</select>
+
 
       <button className='update-btn' onClick={handleUpdate}>Complete My Task</button>
     </div>
