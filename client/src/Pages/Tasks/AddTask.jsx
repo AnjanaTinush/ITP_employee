@@ -21,7 +21,7 @@ const AddTask = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch(`/api/auth/users/AllStaff`);
+      const response = await fetch(`/api/auth/users/Allusers`);
       if (!response.ok) {
         throw new Error('Failed to fetch orders');
       }
@@ -68,7 +68,7 @@ const AddTask = () => {
       });
 
       setTimeout(() => {
-        navigate('/AdminAllTask');
+        navigate('/AllTask');
       }, 3000);
     } catch (error) {
       console.error('Error creating task:', error.message);
@@ -91,7 +91,7 @@ const AddTask = () => {
             <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">Add Task</h2>
             <form className="space-y-6 ml-4" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="stafffid" className="block text-sm font-medium text-gray-700">Staff Id</label>
+                <label htmlFor="stafffid" className="block text-sm font-medium text-gray-700">User name</label>
                 <select
                   id="stafffid"
                   name="stafffid"
@@ -100,9 +100,9 @@ const AddTask = () => {
                   required
                   className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
-                  <option value="">Select Staff Id</option>
+                  <option value="">Select user name</option>
                   {orders.map((staff) => (
-                    <option key={staff._id}>{staff.staffId}</option>
+                    <option key={staff._id}>{staff.username}</option>
                   ))}
                 </select>
               </div>

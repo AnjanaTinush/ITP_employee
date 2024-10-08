@@ -211,6 +211,31 @@ body {
   background-color: #95a5a6;
 }
 
+/* Delete Button Styling */
+.card-delete-btn {
+  background-color: #e74c3c; /* Red color for delete action */
+  border: none;
+  padding: 10px;
+  border-radius: 50%; /* Round button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-delete-btn img {
+  width: 20px; /* Ensure delete icon size */
+  height: 20px;
+}
+
+.card-delete-btn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow on hover */
+}
+
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   #admin-page-names {

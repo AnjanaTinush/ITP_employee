@@ -42,7 +42,7 @@ function UpdateTask() {
 
   const handleUpdate = async () => {
     try {
-      task.is_complete=true;
+      
       const response = await fetch(`/api/user/updateTask`, {
         method: 'PUT',
         headers: {
@@ -51,14 +51,13 @@ function UpdateTask() {
         body: JSON.stringify({
           id: task._id,
           ...task,
-          status: 'completed', // Update task status to completed
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        alert('Task Completed Successfully');
+        alert('Task updated Successfully');
         navigate('/AllTask'); // Redirect back to AllTask after update
       } else {
         console.error(data.message);
@@ -87,7 +86,10 @@ function UpdateTask() {
       <label htmlFor="end_date">End Date:</label>
       <input type="date" id="end_date" name="end_date" onChange={handleInputChange} value={task?.end_date} />
 
-      <button className='update-btn' onClick={handleUpdate}>Complete My Task</button>
+      
+
+
+      <button className='update-btn' onClick={handleUpdate}>Update  Task</button>
     </div>
   );
 }

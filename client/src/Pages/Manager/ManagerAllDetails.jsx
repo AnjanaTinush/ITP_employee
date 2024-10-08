@@ -6,6 +6,12 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../../firebase';
 import '../css/Alldetails.css';
 import logo from '../css/delete-icon.png';
+import { useSelector, useDispatch } from "react-redux";
+import {
+  asignout,
+} from "../../redux/User/userSlice";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ManagerAllDetails() {
   const [orders, setOrders] = useState([]);
@@ -75,6 +81,21 @@ export default function ManagerAllDetails() {
     }
   };
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  
+  const handleSignOut = async () => {
+    try {
+      await fetch("api/auth/signout");
+      dispatch(asignout());
+      navigate("/manager-sign-in");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
   return (
     <div className="p-4">
@@ -89,7 +110,7 @@ export default function ManagerAllDetails() {
         <Link id="all-task-page-btn" to="/AddTask">
           Add Task
         </Link>
-        <Link id="all-task-page-btn" >
+        <Link id="all-task-page-btn" onClick={handleSignOut} >
           Log out
         </Link>
       </div>
@@ -101,15 +122,15 @@ export default function ManagerAllDetails() {
               <div className="card-header flex items-center justify-between">
                 <h3 className="text-xl font-bold">{order.firstName} {order.lastName}</h3>
                 <Button
-                  id="card-delete-btn"
-                  onClick={() => {
-                    setShowModal(true);
-                    setOrderIdToDelete(order._id);
-                  }}
-                  className="delete-button"
-                >
-                  <img src={logo} alt="Delete" width="20" height="20" />
-                </Button>
+  onClick={() => {
+    setShowModal(true);
+    setOrderIdToDelete(order._id);
+  }}
+  className="bg-red-500 hover:bg-red-600 p-2 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110 shadow-lg"
+>
+ Delete
+</Button>
+
               </div>
               <div className="card-body">
                 <p><strong>Staff ID:</strong> {order.staffId}</p>

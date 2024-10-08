@@ -184,6 +184,18 @@ export const AllStaff = async (req, res, next) => {
     }
 };
 
+//all users items
+export const AllUsers = async (req, res, next) => {
+    try{
+    
+        const orders=await User.find({})
+        res.json(orders)
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error:'Internal server error'})
+    }
+};
+
 
 
 
@@ -266,6 +278,10 @@ export const google=async(req,res,next)=>{
 
 
 export const signout=(req,res)=>{
+    res.clearCookie('access_token').status(200).json('Signout Success')
+}
+
+export const asignout=(req,res)=>{
     res.clearCookie('access_token').status(200).json('Signout Success')
 }
 

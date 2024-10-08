@@ -1,5 +1,5 @@
 import express from 'express'
-import { signin, signup,google,signout,AddStaff,getStaffByUserId,AllStaff,manager_signup,manager_signin,manager_send_email,AddTASK,AllTasks} from '../controllers/auth.controller.js';
+import { signin, signup,google,signout,asignout,AddStaff,getStaffByUserId,AllStaff,AllUsers,manager_signup,manager_signin,manager_send_email,AddTASK,AllTasks} from '../controllers/auth.controller.js';
 
 
 const router=express.Router();
@@ -9,6 +9,7 @@ router.post("/signin",signin)//login
 router.post("/google",google)
 /*router.post("/google1",google1)*/
 router.get('/signout',signout)
+router.get('/asignout',asignout)
 
 
 
@@ -16,6 +17,7 @@ router.get('/signout',signout)
 router.post("/AddStaff",AddStaff)
 router.get("/Staff/:id",getStaffByUserId)//for data fetch according to user id
 router.get("/users/AllStaff",AllStaff)
+router.get("/users/Allusers",AllUsers)
 
 
 //manager login & register
