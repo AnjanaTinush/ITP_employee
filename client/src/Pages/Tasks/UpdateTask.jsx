@@ -57,7 +57,7 @@ function UpdateTask() {
       const data = await response.json();
 
       if (data.success) {
-        alert('Task Completed Successfully');
+        alert('Task updated Successfully');
         navigate('/AllTask'); // Redirect back to AllTask after update
       } else {
         console.error(data.message);
@@ -86,16 +86,10 @@ function UpdateTask() {
       <label htmlFor="end_date">End Date:</label>
       <input type="date" id="end_date" name="end_date" onChange={handleInputChange} value={task?.end_date} />
 
-      <label htmlFor="status">Status:</label>
-<select id="status" name="status" onChange={handleInputChange} value={task?.status}
-className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  >
-  <option value="Pending">Pending</option>
-  <option value="Completed">Completed</option>
-</select>
+      
 
 
-      <button className='update-btn' onClick={handleUpdate}>Complete My Task</button>
+      <button className='update-btn' onClick={handleUpdate}>Update  Task</button>
     </div>
   );
 }
